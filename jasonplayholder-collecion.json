@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "90399031-805c-46db-9f5f-9a650971ea05",
+		"name": "jason_collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23497380"
+	},
+	"item": [
+		{
+			"name": "Firts request",
+			"item": [
+				{
+					"name": "Base",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}",
+							"host": [
+								"{{base_url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "request_Post",
+			"item": [
+				{
+					"name": "Post_request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response= pm.response.json();\r",
+									"let postId= response.id;\r",
+									"pm.collectionVariables.set(\"post_id\", \"postId\");\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let body= {\r",
+									"    \"title\": \"Probando\",\r",
+									"    \"body\": \"Mi post\",\r",
+									"    \"userId\": 1\r",
+									"};\r",
+									"pm.collectionVariables.set(\"post_body\", JSON.stringify(body));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{{post_body}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}",
+							"host": [
+								"{{base_url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "request_patch",
+			"item": [
+				{
+					"name": "Patch_request",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Lo he editado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/{{post_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{post_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete_request",
+			"item": [
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/101",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"101"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "post_request",
+			"value": ""
+		},
+		{
+			"key": "post_id",
+			"value": ""
+		},
+		{
+			"key": "post_body",
+			"value": ""
+		}
+	]
+}
